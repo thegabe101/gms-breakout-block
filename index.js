@@ -1,6 +1,13 @@
 const grid = document.querySelector('.gameGrid');
 const blockWidth = 100;
-const blockHeight = 20
+const blockHeight = 20;
+const boardWidth = 560;
+const playerStart = [230, 10];
+let currentPosition = playerStart;
+const ballStart = [270, 40];
+let ballPosition = ballStart;
+let timerId;
+
 //--------------------------------------------------------------------------------------------------------------------------------------------------//
 class Block {
     constructor(xAxis, yAxis) {
@@ -41,3 +48,59 @@ function buildBlock() {
 }
 
 buildBlock();
+
+const player = document.createElement('div');
+player.classList.add('player');
+drawUserPosition();
+grid.appendChild(player);
+
+function drawUserPosition() {
+    player.style.left = currentPosition[0] + 'px';
+    player.style.bottom = currentPosition[1] + 'px';
+}
+
+function drawBallPosition() {
+    ball.style.left = currentPosition[0] + 'px';
+    ball.style.bottom = currentPosition[1] + 'px';
+}
+
+//now to create an event listener keydown to move left and right
+
+function movePlayer(e) {
+    switch (e.key) {
+        case 'ArrowLeft':
+            if (currentPosition[0] > 0) {
+                currentPosition[0] -= 10;
+                drawUserPosition();
+            }
+            break;
+        case 'ArrowRight':
+            if (currentPosition[0] < boardWidth - blockWidth) {
+                currentPosition[0] += 10;
+                drawUserPosition()
+            }
+            break;
+    }
+}
+
+document.addEventListener('keydown', movePlayer);
+
+//time to add the ball 
+
+const ball = document.createElement('div');
+ball.classList.add('ball');
+ball.style.left = ballPosition[0] + 'px';
+ball.style.bottom = ballPosition[1] + 'px';
+grid.appendChild(ball);
+
+function moveBall() {
+    ballPosition[0] += 2;
+    ballPosition[1] += 2;
+    drawBallPosition()
+}
+
+timerId = setInterval(moveBall, 30);
+
+function checkCollision() {
+    
+}

@@ -16,3 +16,18 @@
     background-color: blueviolet;
     position: absolute;
 }
+
+.player {
+    width: 100px;
+    height: 20px;
+    background-color: rgb(203, 0, 0);
+    position: absolute;
+}
+
+.ball {
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    background-color: rgb(4, 169, 158);
+    position: absolute;
+}
