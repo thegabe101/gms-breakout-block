@@ -2,11 +2,15 @@ const grid = document.querySelector('.gameGrid');
 const blockWidth = 100;
 const blockHeight = 20;
 const boardWidth = 560;
+const boardHeight = 300;
+const ballDiameter = 20;
 const playerStart = [230, 10];
 let currentPosition = playerStart;
 const ballStart = [270, 40];
 let ballPosition = ballStart;
 let timerId;
+let xDirection = 2;
+let yDirection = 2;
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------//
 class Block {
@@ -60,8 +64,8 @@ function drawUserPosition() {
 }
 
 function drawBallPosition() {
-    ball.style.left = currentPosition[0] + 'px';
-    ball.style.bottom = currentPosition[1] + 'px';
+    ball.style.left = ballPosition[0] + 'px';
+    ball.style.bottom = ballPosition[1] + 'px';
 }
 
 //now to create an event listener keydown to move left and right
@@ -94,13 +98,32 @@ ball.style.bottom = ballPosition[1] + 'px';
 grid.appendChild(ball);
 
 function moveBall() {
-    ballPosition[0] += 2;
-    ballPosition[1] += 2;
+    ballPosition[0] += xDirection;
+    ballPosition[1] += yDirection;
     drawBallPosition()
 }
 
 timerId = setInterval(moveBall, 30);
 
+
 function checkCollision() {
-    
+    if (ballPosition[0] >= (boardWidth - ballDiameter) || ballPosition[1] >= (boardHeight - ballDiameter)) {
+        changeDirection()
+    }
+}
+
+function changeDirection() {
+    if (xDirection === 2 && yDirection === 2) {
+        yDirection = -2
+        return;
+    } if (xDirection === 2 && yDirection === -2) {
+        xDirection = -2
+        return;
+    } if (xDirection === -2 && yDirection === -2) {
+        yDirection = 2
+        return;
+    } if (xDirection === -2 && yDirection === 2) {
+        xDirection = 2
+        return;
+    }
 }
