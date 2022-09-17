@@ -101,6 +101,7 @@ function moveBall() {
     ballPosition[0] += xDirection;
     ballPosition[1] += yDirection;
     drawBallPosition()
+    checkCollision();
 }
 
 timerId = setInterval(moveBall, 30);
@@ -115,15 +116,21 @@ function checkCollision() {
 function changeDirection() {
     if (xDirection === 2 && yDirection === 2) {
         yDirection = -2
+        console.log('I changed direction.')
         return;
     } if (xDirection === 2 && yDirection === -2) {
         xDirection = -2
+        console.log('I changed direction.')
         return;
     } if (xDirection === -2 && yDirection === -2) {
         yDirection = 2
+        console.log('I changed direction.')
         return;
     } if (xDirection === -2 && yDirection === 2) {
         xDirection = 2
+        console.log('I changed direction.')
         return;
     }
 }
+
+

@@ -3,6 +3,10 @@
     padding: 0;
 }
 
+/* body {
+    background-image: url('eldenBeast.jpg');
+} */
+
 .gameGrid {
     position: absolute;
     width: 560px;
