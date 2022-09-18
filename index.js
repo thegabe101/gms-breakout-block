@@ -11,6 +11,8 @@ let ballPosition = ballStart;
 let timerId;
 let xDirection = 2;
 let yDirection = 2;
+const scoreDisplay = document.querySelector('#score');
+let score = 0;
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------//
 class Block {
@@ -108,10 +110,40 @@ timerId = setInterval(moveBall, 30);
 
 
 function checkCollision() {
-    if (ballPosition[0] >= (boardWidth - ballDiameter) || ballPosition[1] >= (boardHeight - ballDiameter)) {
+    for (let i = 0; i < blocks.length; i++) {
+        if (
+            (ballPosition[0] > blocks[i].bottomLeft[0] && ballPosition[0] < blocks[i].bottomRight[0]) &&
+            ((ballPosition[1] + ballDiameter) > blocks[i].bottomLeft[1] && ballPosition[1] < blocks[i].topLeft[1])
+        ) {
+            const allBlocks = Array.from(document.querySelectorAll('.block'))
+            console.log(allBlocks)
+            allBlocks[i].classList.remove('block')
+            blocks.splice(i, 1)
+            changeDirection();
+            score++
+            scoreDisplay.innerHTML = score;
+            if (blocks.length === 0) {
+                scoreDisplay.innerHTML = 'YOU WIN!!!'
+                clearInterval(timerId)
+                document.removeEventListener('keydown', movePlayer
+                )
+            }
+        }
+    }
+    if (ballPosition[0] >= (boardWidth - ballDiameter) || ballPosition[1] >= (boardHeight - ballDiameter) || ballPosition[0] <= 0) {
+        changeDirection()
+    } if ((ballPosition[0] > currentPosition[0] && ballPosition[0] < currentPosition[0] + blockWidth) &&
+        (ballPosition[1] > currentPosition[1] && ballPosition[1] < currentPosition[1] + blockHeight)) {
         changeDirection()
     }
+    if (ballPosition[1] <= 0) {
+        clearInterval(timerId)
+        scoreDisplay.innerHTML = 'Game over!'
+        document.removeEventListener('keydown', movePlayer);
+    }
 }
+
+
 
 function changeDirection() {
     if (xDirection === 2 && yDirection === 2) {
